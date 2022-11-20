@@ -12,6 +12,17 @@ export async function makePost(end,data,token=""){
     return req
 }
 
+export async function makeMedia(end,data,token=""){
+    const req = await fetch(url+end,{
+        method: 'POST',
+        headers: token ? {
+            'Authorization':'Bearer ' + token,
+        }: {'Content-Type': 'multipart/form-data'} ,
+        body: data
+    }).then(res => res.json())
+    return req
+}
+
 export async function makeGet(end,token=""){
     const req = await fetch(url+end,{
         method: "GET",

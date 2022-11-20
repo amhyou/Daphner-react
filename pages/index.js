@@ -6,12 +6,14 @@ import Navigation from '../components/Navigation'
 import Login from "../components/Login"
 import Signup from "../components/Signup"
 import jwt_decode from "jwt-decode";
+import Profile from '../components/Profile'
 
 export default function Home() {
   const [accessToken,setAccessToken] = useState("")
   const [relogin,setRelogin] = useState(1)
   const [ws,setWs] = useState("")
   const [currUser , setCurrUser] = useState(0)
+  const [section,setSection] = useState(4)
   useEffect(()=>{
     const tk = localStorage.getItem('token')
     setAccessToken(prev=> {
@@ -28,10 +30,11 @@ export default function Home() {
   },[])
   
   useEffect(()=>{
-    if(accessToken){
+    if(relogin==2){
       const sock = new WebSocket("ws://127.0.0.1:8000/realtime?token="+accessToken)
       const decoded = jwt_decode(accessToken)
       const userid = decoded.user_id
+      console.log(userid)
       setCurrUser(prev=>userid)
       setWs(prev=>sock)
     }
@@ -46,7 +49,12 @@ export default function Home() {
         relogin==2 &&
         <>
         <Navigation accessToken={accessToken} />
-        <Conversation ws={ws} currUser={currUser} accessToken={accessToken} />
+        { 
+          section==3 && <Conversation ws={ws} currUser={currUser} accessToken={accessToken} />
+          ||
+          section==4 && <Profile accessToken={accessToken} />
+        }
+        
         </>
       }
       
