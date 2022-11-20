@@ -30,11 +30,11 @@ const Login = ({setAccessToken,setRelogin}) => {
                 <h1 className='text-xl'>Login</h1>
                 <div className='flex flex-col'>
                     <h1>Email:</h1>
-                    <input name="email" type="email" className='py-2' required />
+                    <input name="email" type="email" className='py-2 text-black' required />
                 </div>
                 <div className='flex flex-col'>
                     <h1>Password:</h1>
-                    <input name="pass" type="password" className='py-2' required />
+                    <input name="pass" type="password" className='py-2 text-black' required />
                 </div>
                 <button type='submit' className='bg-yellow-500 rounded-md w-[30%] hover:bg-yellow-800'>Submit</button>
                 <h1 className='text-red-500'>{err}</h1>

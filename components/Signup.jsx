@@ -15,7 +15,7 @@ const Signup = ({setAccessToken,setRelogin}) => {
                 setAccessToken(data.access)
                 localStorage.setItem("token",data.access)
                 setErr(prev=>"")
-                setRelogin(prev=>3)
+                setRelogin(prev=>2)
             }
         }
         const create = async ()=>{
@@ -39,15 +39,15 @@ const Signup = ({setAccessToken,setRelogin}) => {
                 <h1 className='text-xl'>SignUp</h1>
                 <div className='flex flex-col'>
                     <h1>Name:</h1>
-                    <input name="name" type="text" className='py-2' required />
+                    <input name="name" type="text" className='py-2 text-black' required />
                 </div>
                 <div className='flex flex-col'>
                     <h1>Email:</h1>
-                    <input name="email" type="email" className='py-2' required />
+                    <input name="email" type="email" className='py-2 text-black' required />
                 </div>
                 <div className='flex flex-col'>
                     <h1>Password:</h1>
-                    <input name="pass" type="password" className='py-2' required />
+                    <input name="pass" type="password" className='py-2 text-black' required />
                 </div>
                 
                 <button type='submit' className='bg-yellow-500 rounded-md w-[30%] hover:bg-yellow-800'>signup</button>

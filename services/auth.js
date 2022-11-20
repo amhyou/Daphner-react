@@ -1,19 +1,39 @@
 const url = "http://127.0.0.1:8000/api/"
 
-export async function makePost(end,data){
+export async function makePost(end,data,token=""){
     const req = await fetch(url+end,{
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
+        headers: token ? {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + token
+        }: {'Content-Type': 'application/json'} ,
         body: JSON.stringify(data)
     }).then(res => res.json())
     return req
 }
 
-export async function makeGet(end){
-    const req = await fetch(url+end).then(res => res.json())
+export async function makeGet(end,token=""){
+    const req = await fetch(url+end,{
+        method: "GET",
+        headers: token ? {
+            'Authorization':'Bearer ' + token
+        } : {},
+        
+    }).then(res => res.json()).then(res => {
+        if(res.code=="token_not_valid") localStorage.removeItem("token") 
+        else return res})
+    return req
+}
+
+export async function makeDelete(end,data,token=""){
+    const req = await fetch(url+end,{
+        method: 'Delete',
+        headers: token ? {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + token
+        }: {'Content-Type': 'application/json'} ,
+        body: JSON.stringify(data)
+    }).then(res => res.json())
     return req
 }
 
