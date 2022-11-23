@@ -7,13 +7,15 @@ import Login from "../components/Login"
 import Signup from "../components/Signup"
 import jwt_decode from "jwt-decode";
 import Profile from '../components/Profile'
+import Feed from '../components/Feed'
+
 
 export default function Home() {
   const [accessToken,setAccessToken] = useState("")
   const [relogin,setRelogin] = useState(1)
   const [ws,setWs] = useState("")
   const [currUser , setCurrUser] = useState(0)
-  const [section,setSection] = useState(4)
+  const [section,setSection] = useState(1)
   useEffect(()=>{
     const tk = localStorage.getItem('token')
     setAccessToken(prev=> {
@@ -53,6 +55,8 @@ export default function Home() {
           section==3 && <Conversation ws={ws} currUser={currUser} accessToken={accessToken} />
           ||
           section==4 && <Profile accessToken={accessToken} />
+          ||
+          section==1 && <Feed ws={ws} currUser={currUser} accessToken={accessToken} />
         }
         
         </>
