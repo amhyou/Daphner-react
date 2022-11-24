@@ -1,35 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { makeGet,makePost } from '../services/auth'
 import { AiFillCloseCircle } from "react-icons/ai"
 
 const Share = ({post,accessToken,setEngagedPost,ws,setPosts,currUser}) => {
-    const [shares,setShares] = useState([])
-    const getShares = async () => {
+    const [comments,setComments] = useState([])
+    const getComments = async () => {
         if (post){
-            const res = await makeGet("click/"+post.id+"/share",accessToken)
+            const res = await makeGet("click/"+post.id+"/comment",accessToken)
             console.log(res)
-            setShares(prev => res)
+            setComments(prev => res)
         }
         
     }
-
-    const handleShare = async (elm)=>{
-        // update the post likes in database && notif
-        const res = await makePost("click/"+elm.id+"/share",{},accessToken) 
+    const cmi = useRef(null)
+    const handleComment = async (elm)=>{
+        if(cmi.current.value){
+        // update the post comments in database && notif
+        const res = await makePost("click/"+elm.id+"/comment",{msg:cmi.current.value},accessToken) 
+        cmi.current.value = ""
         console.log(res)
 
-        // update the post likes in frontend
-        setShares(prev=> [res.new,...prev] )
+        // update the post comments in frontend
+        setComments(prev=> [res.new,...prev] )
         setPosts(prev => {
-            return prev.map(e=> e.id == elm.id ? {...e,shares:e.shares+1 } : e )
+            return prev.map(e=> e.id == elm.id ? {...e,comments:e.comments+1 } : e )
         })
         
         // send event notification to owner
-        ws.send(JSON.stringify({to:"user"+String(elm.owner),msg: currUser+" shared your post "+elm.id,event:"shareNotif"}))
+        ws.send(JSON.stringify({to:"user"+String(elm.owner),msg: currUser+" commented your post "+elm.id,event:"commentNotif"}))
+    
+        }
     }
 
     useEffect(()=>{
-        getShares()
+        getComments()
     },[post])
   return (
     <div className={`fixed left-0 top-0 w-full h-full backdrop-blur-2xl ${post ? 'scale-1' : 'scale-0'} duration-300 ease-in-out`}>
@@ -38,26 +42,24 @@ const Share = ({post,accessToken,setEngagedPost,ws,setPosts,currUser}) => {
                 <AiFillCloseCircle size="20" />
                 <h1 className='underline cursor-pointer'>close</h1>
             </div>
-            { 
-                post && post.owner == currUser ? <h1 className='text-green-500 text-center'>you can't reshare you own post</h1>
-                :
-                !shares.some(sh => sh.sender.id == currUser) ? <button className={`bg-green-200 mx-auto px-5 rounded-md hover:bg-green-100`} onClick={()=>handleShare(post)}>Confirm Share</button> 
-                :
-                <h1 className='text-green-500 text-center'>you already shared this post</h1>
-            }
+
+            <div className='flex justify-center items-center gap-3'>
+                <input ref={cmi} placeholder='type your comment' />
+                <button className={`bg-green-200 rounded-md hover:bg-green-100`} onClick={()=>handleComment(post)}>Comment</button> 
+            </div>
             
             
             <div className='flex flex-col gap-5 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300'>
             {
-                shares.length && shares.map((elm,key) => {return(
+                comments.length && comments.map((elm,key) => {return(
                     <div key={key} className='flex items-center gap-2 justify-center'>
                         <img className='h-[30px]' src={`http://127.0.0.1:8000${elm.sender.image}`} />
                         <h1 className='text-white text-center underline cursor-pointer'>{elm.sender.name}</h1>
-                        <p>published it at {elm.time.slice(0,16)}</p>
+                        <p>: {elm.msg}</p>
                     </div>
                 )})
                 ||
-                <h1 className='text-center'>you are the first person to share this post.</h1>
+                <h1 className='text-center'>you are the first person to comment this post.</h1>
             }
             </div>
         </div>
