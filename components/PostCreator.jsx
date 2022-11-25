@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { makeMedia } from '../services/auth'
-const PostCreator = ({accessToken}) => {
+const PostCreator = ({accessToken,setPosts}) => {
     const [img,setImg] = useState(null)
     const post = useRef(null)
     const [result , setResult ] = useState("")
@@ -12,7 +12,8 @@ const PostCreator = ({accessToken}) => {
             data.append('msg',post.current.value)
             const resp = await makeMedia("click",data,accessToken)
             console.log(resp)
-            setResult(prev => resp.msg)
+            setResult(prev => "post succesfully published")
+            setPosts(prev=>[resp.new,...prev])
         }
         post.current.value = ""
         setImg(prev => null)

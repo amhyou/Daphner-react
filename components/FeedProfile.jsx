@@ -6,21 +6,22 @@ import Share from './Share'
 import Comment from './Comment'
 import Trend from './Trend'
 import Follow from './Follow'
+import Profile from './Profile'
 
-const Feed = ({accessToken,currUser,ws,showOtherProfile}) => {
+const FeedProfile = ({accessToken,currUser,ws,otherUser,showOtherProfile}) => {
     const [posts,setPosts] = useState([])
     const [engagedPost , setEngagedPost] = useState(null)
     const [toCommentPost , setToCommentPost] = useState(null)
 
     const getPosts = async()=>{
         // get 10 posts from db
-        const poz = await makeGet("feed?nb=10",accessToken)
+        const poz = await makeGet("click?pro="+otherUser,accessToken)
         console.log(poz)
         setPosts(prev => poz)
     }
     useEffect(()=>{
         getPosts()
-    },[])
+    },[otherUser])
     const handleLike = async (elm)=>{
         // update the post likes in database && notif
         const res = await makePost("click/"+elm.id+"/like",{},accessToken) 
@@ -40,18 +41,18 @@ const Feed = ({accessToken,currUser,ws,showOtherProfile}) => {
         <Share accessToken={accessToken} currUser={currUser} setPosts={setPosts} ws={ws} post={engagedPost} setEngagedPost={setEngagedPost} />
         <Comment accessToken={accessToken} currUser={currUser} setPosts={setPosts} ws={ws} post={toCommentPost} setEngagedPost={setToCommentPost} />
         <div className='flex flex-col items-center flex-1 border-x-solid border-x-white border-x-2 overflow-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 '>
-            <PostCreator setPosts={setPosts} accessToken={accessToken} />
+            <Profile accessToken={accessToken} currUser={currUser} otherUser={otherUser} />
         
             {   posts &&
                 posts.map((elm,key)=>{return(
                     <div key={key} className='flex flex-col gap-2 px-10 mt-5'>
                         <div className='flex items-center'>
-                            <img className='h-[35px] ml-5 mr-1' src={`http://127.0.0.1:8000${elm.owners.image}`} onClick={()=>{showOtherProfile(elm.owner)}} />
-                            <h1 className='text-md underline cursor-pointer' onClick={()=>{showOtherProfile(elm.owner)}}>{elm.owners.name}</h1>
+                            <img className='h-[35px] ml-5 mr-1' src={`http://127.0.0.1:8000${elm.owners.image}`} onClick={()=>showOtherProfile(elm.owners.id)} />
+                            <h1 className='text-md underline cursor-pointer' onClick={()=>showOtherProfile(elm.owners.id)}>{elm.owners.name}</h1>
                             <div className={`${elm.owner != elm.origin ? 'flex items-center':'hidden' } `}>
                                 <p className='ml-2'>shared from</p>
-                                <img className='h-[35px] ml-1  mr-1' src={`http://127.0.0.1:8000${elm.origins.image}`} onClick={()=>{showOtherProfile(elm.origin)}} />
-                                <h1 className='text-md underline cursor-pointer' onClick={()=>{showOtherProfile(elm.origin)}}>{elm.origins.name}</h1>
+                                <img className='h-[35px] ml-1  mr-1' src={`http://127.0.0.1:8000${elm.origins.image}`} onClick={()=>showOtherProfile(elm.origins.id)} />
+                                <h1 className='text-md underline cursor-pointer' onClick={()=>showOtherProfile(elm.origins.id)}>{elm.origins.name}</h1>
                             </div>
                         </div>
                         
@@ -85,4 +86,4 @@ const Feed = ({accessToken,currUser,ws,showOtherProfile}) => {
   )
 }
 
-export default Feed
+export default FeedProfile

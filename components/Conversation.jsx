@@ -7,7 +7,7 @@ import { makeGet,makePost,makeDelete } from '../services/auth';
 import { AiFillDelete } from "react-icons/ai"
 import { HiOutlineStatusOnline } from "react-icons/hi"
 
-const Conversation = ({accessToken,ws}) => {
+const Conversation = ({accessToken,ws,showOtherProfile}) => {
     const [opts,setOpts] = useState([])
     const [convs,setConvs] = useState([])
     const [partner,setPartner] = useState()
@@ -65,12 +65,12 @@ const Conversation = ({accessToken,ws}) => {
         <h1 className="text-xl ml-5 pt-5 mb-5">Conversations</h1>
         <SelectSearch options={opts} search="true" onChange={createConversation} placeholder="Choose your language" />
         <div className='flex flex-grow'>
-            <div className='flex flex-col pt-7 items-start gap-5 w-full '>
+            <div className='flex flex-col pt-7 items-start gap-5 w-full max-h-[70vh] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300'>
                 {
                     convs.map((elm,key)=>{ return (
                         <div key={key} className='flex items-center flex-between'>
                             <div onClick={()=>setPartner(prev=>elm)} className='flex items-center border-solid border-3 border-zinc-800 rounded-lg hover:bg-stone-700 cursor-pointer'>
-                                <HiOutlineStatusOnline size="15" color={`${elm.online ? "green" : "red"}`} />
+                                {/* <HiOutlineStatusOnline size="15" color={`${elm.online ? "green" : "red"}`} /> this is for connected feature  */}
                                 <img src={`http://127.0.0.1:8000${elm.img}`} className="h-[50px]" />
                                 <h1 className='text-xl ml-5'>{elm.name}</h1>
                             </div>
@@ -80,7 +80,7 @@ const Conversation = ({accessToken,ws}) => {
                 }
                 
             </div>
-            <Message setOpts={setOpts} setPartner={setPartner} setConvs={setConvs} ws={ws} partner={partner} accessToken={accessToken} />
+            <Message showOtherProfile={showOtherProfile} setOpts={setOpts} setPartner={setPartner} setConvs={setConvs} ws={ws} partner={partner} accessToken={accessToken} />
         </div>
     </div>
   )

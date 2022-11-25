@@ -3,7 +3,7 @@ import { AiOutlineSend } from "react-icons/ai"
 import { MdAccessAlarm } from 'react-icons/md'
 import { makeGet, makePost } from '../services/auth'
 import { FiRefreshCcw } from 'react-icons/fi'
-const Message = ({partner,accessToken,ws,setConvs,setPartner,setOpts}) => {
+const Message = ({partner,accessToken,ws,setConvs,setPartner,setOpts,showOtherProfile}) => {
   const [msgs,setMsgs] = useState([])
 
   const createMessage = async (e) => {
@@ -74,15 +74,15 @@ const Message = ({partner,accessToken,ws,setConvs,setPartner,setOpts}) => {
   return (
     <div className='max-h-[80vh] mr-5 w-[130%] border-x-solid border-x-2 border-x-white flex flex-col px-3'>
         { partner && msgs!=[] &&
-          <div className='flex items-center border-solid border-3 border-zinc-800 hover:bg-stone-700 cursor-pointer'>
+          <div className='flex items-center border-solid border-3 border-zinc-800'>
             <h1 className='text-xl'>Chatting with :</h1>
-            <img src={`http://127.0.0.1:8000${partner.img}`} className="h-[50px] ml-5" />
-            <h1 className='text-xl ml-2'>{partner.name}</h1>
-            <FiRefreshCcw size="30" className='ml-2 hover:bg-teal-600' onClick={getMsg} />          
+            <img src={`http://127.0.0.1:8000${partner.img}`} className="h-[50px] ml-5 cursor-pointer" onClick={()=>{showOtherProfile(partner.value)}} />
+            <h1 className='text-xl ml-2 underline cursor-pointer' onClick={()=>{showOtherProfile(partner.value)}}>{partner.name}</h1>
+            <FiRefreshCcw size="30" className='ml-5 hover:bg-teal-600' onClick={getMsg} />          
           </div>
           
         }
-        <div className='flex flex-col flex-grow gap-1 mt-5 overflow-y-auto px-5 pb-10'>
+        <div className='flex flex-col flex-grow gap-1 mt-5 px-5 pb-10 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300'>
           { partner && msgs!=[] &&
              msgs.map((elm,key)=>{ return (
               <div key={key}>
