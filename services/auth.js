@@ -1,4 +1,4 @@
-const url = "http://127.0.0.1:8000/api/"
+const url = "https://daphner.azurewebsites.net/api/"
 
 export async function makePost(end,data,token=""){
     const req = await fetch(url+end,{
