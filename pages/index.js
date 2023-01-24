@@ -59,7 +59,7 @@ export default function Home() {
   
   useEffect(()=>{
     if(relogin==2){
-      const sock = new WebSocket("ws://daphner.azurewebsites.net/realtime?token="+accessToken)
+      const sock = new WebSocket("wss://daphner.azurewebsites.net/realtime?token="+accessToken)
     
       setWs(prev=>sock)
     }
