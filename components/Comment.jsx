@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { makeGet,makePost } from '../services/auth'
+import { makeGet,makePost,backend } from '../services/auth'
 import { AiFillCloseCircle } from "react-icons/ai"
 
 const Share = ({post,accessToken,setEngagedPost,ws,setPosts,currUser}) => {
@@ -44,8 +44,8 @@ const Share = ({post,accessToken,setEngagedPost,ws,setPosts,currUser}) => {
             </div>
 
             <div className='flex justify-center items-center gap-3'>
-                <input ref={cmi} placeholder='type your comment' />
-                <button className={`bg-green-200 rounded-md hover:bg-green-100`} onClick={()=>handleComment(post)}>Comment</button> 
+                <input className='text-black' ref={cmi} placeholder='type your comment' />
+                <button className={`bg-green-500 rounded-sm px-2 hover:bg-green-300`} onClick={()=>handleComment(post)}>Comment</button> 
             </div>
             
             
@@ -53,7 +53,7 @@ const Share = ({post,accessToken,setEngagedPost,ws,setPosts,currUser}) => {
             {
                 comments.length && comments.map((elm,key) => {return(
                     <div key={key} className='flex items-center gap-2 justify-center'>
-                        <img className='h-[30px]' src={`http://127.0.0.1:8000${elm.sender.image}`} />
+                        <img className='h-[30px]' src={`http://${backend+elm.sender.image}`} />
                         <h1 className='text-white text-center underline cursor-pointer'>{elm.sender.name}</h1>
                         <p>: {elm.msg}</p>
                     </div>

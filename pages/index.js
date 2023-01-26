@@ -10,6 +10,7 @@ import Profile from '../components/Profile'
 import Feed from '../components/Feed'
 import Notification from '../components/Notification'
 import FeedProfile from '../components/FeedProfile'
+import { backend } from "../services/auth"
 
 
 export default function Home() {
@@ -59,7 +60,7 @@ export default function Home() {
   
   useEffect(()=>{
     if(relogin==2){
-      const sock = new WebSocket("ws://127.0.0.1:8000/realtime?token="+accessToken)
+      const sock = new WebSocket("ws://"+backend+"/realtime?token="+accessToken)
     
       setWs(prev=>sock)
     }

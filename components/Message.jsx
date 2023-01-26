@@ -1,7 +1,7 @@
 import React, { useEffect, useState,useRef } from 'react'
 import { AiOutlineSend } from "react-icons/ai"
 import { MdAccessAlarm } from 'react-icons/md'
-import { makeGet, makePost } from '../services/auth'
+import { makeGet, makePost,backend } from '../services/auth'
 import { FiRefreshCcw } from 'react-icons/fi'
 const Message = ({partner,accessToken,ws,setConvs,setPartner,setOpts,showOtherProfile}) => {
   const [msgs,setMsgs] = useState([])
@@ -76,7 +76,7 @@ const Message = ({partner,accessToken,ws,setConvs,setPartner,setOpts,showOtherPr
         { partner && msgs!=[] &&
           <div className='flex items-center border-solid border-3 border-zinc-800'>
             <h1 className='text-xl'>Chatting with :</h1>
-            <img src={`http://127.0.0.1:8000${partner.img}`} className="h-[50px] ml-5 cursor-pointer" onClick={()=>{showOtherProfile(partner.value)}} />
+            <img src={`http://${backend+partner.img}`} className="h-[50px] ml-5 cursor-pointer" onClick={()=>{showOtherProfile(partner.value)}} />
             <h1 className='text-xl ml-2 underline cursor-pointer' onClick={()=>{showOtherProfile(partner.value)}}>{partner.name}</h1>
             <FiRefreshCcw size="30" className='ml-5 hover:bg-teal-600' onClick={getMsg} />          
           </div>

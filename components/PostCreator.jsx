@@ -14,16 +14,20 @@ const PostCreator = ({accessToken,setPosts}) => {
             console.log(resp)
             setResult(prev => "post succesfully published")
             setPosts(prev=>[resp.new,...prev])
+            post.current.value = ""
+            setImg(prev => null)
         }
-        post.current.value = ""
-        setImg(prev => null)
+        else if (!img && post.current.value){
+            setResult(prev => "please join an image")
+        }
+        
         
     }
   return (
     <div className='border-y-solid border-y-2 border-y-white py-5'>
         <h1 className="text-2xl">Share your thought with the community</h1>
-        <div className='flex flex-col justify-center px-10 mt-10'>
-            <textarea type="text" ref={post} placeholder='what do you have in mind ?' />
+        <div className='flex flex-col justify-center px-10 mt-10' >
+            <textarea className='text-black' type="text" ref={post} placeholder='what do you have in mind ?' />
             <input type="file" onChange={(e)=>setImg(e.target.files[0])} placeholder='text section' />
             <button onClick={handlePost} className="mt-2 p-3 rounded-xl bg-lime-900 hover:bg-green-800">share</button>
             <h1 className='text-red-500'>{result}</h1>

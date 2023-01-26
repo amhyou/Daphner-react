@@ -4,7 +4,7 @@ import { AiOutlineMessage } from 'react-icons/ai'
 import { MdOutlineNotifications } from "react-icons/md"
 import { CgProfile } from "react-icons/cg"
 import { SlLogout } from "react-icons/sl"
-import { makeGet } from '../services/auth'
+import { makeGet,backend } from '../services/auth'
 const Navigation = ({accessToken,setRelogin,setSection,showOtherProfile,currUser}) => {
     const [ prof , setProf ] = useState(null)
     const  getProfile = async () => {
@@ -21,7 +21,7 @@ const Navigation = ({accessToken,setRelogin,setSection,showOtherProfile,currUser
                 {
                     prof &&
                     <div className='mt-10 flex flex-col items-center justify-center cursor-pointer'>
-                        <img className='h-[100px] ml-5 mr-1 rounded-full' src={`http://127.0.0.1:8000${prof.image}`} />
+                        <img className='h-[100px] ml-5 mr-1 rounded-full' src={`http://${backend+prof.image}`} />
                         <h1 className='text-lg'>{prof.name}</h1>
                     </div>
 

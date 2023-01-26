@@ -1,4 +1,6 @@
-const url = "http://127.0.0.1:8000/api/"
+export const backend = "daphner.amhyou.com"
+
+const url = "http://"+backend+"/api/"
 
 export async function makePost(end,data,token=""){
     const req = await fetch(url+end,{

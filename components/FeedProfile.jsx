@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { makeGet, makePost } from '../services/auth'
+import { makeGet, makePost,backend } from '../services/auth'
 import PostCreator from './PostCreator'
 import { BiLike,BiCommentDetail,BiShareAlt } from "react-icons/bi"
 import Share from './Share'
@@ -47,17 +47,17 @@ const FeedProfile = ({accessToken,currUser,ws,otherUser,showOtherProfile}) => {
                 posts.map((elm,key)=>{return(
                     <div key={key} className='flex flex-col gap-2 px-10 mt-5'>
                         <div className='flex items-center'>
-                            <img className='h-[35px] ml-5 mr-1' src={`http://127.0.0.1:8000${elm.owners.image}`} onClick={()=>showOtherProfile(elm.owners.id)} />
+                            <img className='h-[35px] ml-5 mr-1' src={`http://${backend+elm.owners.image}`} onClick={()=>showOtherProfile(elm.owners.id)} />
                             <h1 className='text-md underline cursor-pointer' onClick={()=>showOtherProfile(elm.owners.id)}>{elm.owners.name}</h1>
                             <div className={`${elm.owner != elm.origin ? 'flex items-center':'hidden' } `}>
                                 <p className='ml-2'>shared from</p>
-                                <img className='h-[35px] ml-1  mr-1' src={`http://127.0.0.1:8000${elm.origins.image}`} onClick={()=>showOtherProfile(elm.origins.id)} />
+                                <img className='h-[35px] ml-1  mr-1' src={`http://${backend+elm.origins.image}`} onClick={()=>showOtherProfile(elm.origins.id)} />
                                 <h1 className='text-md underline cursor-pointer' onClick={()=>showOtherProfile(elm.origins.id)}>{elm.origins.name}</h1>
                             </div>
                         </div>
                         
                         <h1 className='text-md'>{elm.msg}</h1>
-                        <img className='rounded-xl ' src={`http://127.0.0.1:8000${elm.image}`} />
+                        <img className='rounded-xl ' src={`http://${backend+elm.image}`} />
                         <div className='flex gap-5 justify-evenly border-solid border-2 border-neutral-400'>
                             <div className='flex items-center gap-1 hover:scale-[1.5] cursor-pointer bg-fuchsia-600 rounded-md p-2' onClick={()=>{handleLike(elm)}}>
                                 <h1>{elm.likes}</h1>

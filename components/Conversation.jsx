@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import SelectSearch from 'react-select-search';
 import 'react-select-search/style.css'
 import Message from './Message';
-import { makeGet,makePost,makeDelete } from '../services/auth';
+import { makeGet,makePost,makeDelete,backend } from '../services/auth';
 import { AiFillDelete } from "react-icons/ai"
 import { HiOutlineStatusOnline } from "react-icons/hi"
 
@@ -71,7 +71,7 @@ const Conversation = ({accessToken,ws,showOtherProfile}) => {
                         <div key={key} className='flex items-center flex-between'>
                             <div onClick={()=>setPartner(prev=>elm)} className='flex items-center border-solid border-3 border-zinc-800 rounded-lg hover:bg-stone-700 cursor-pointer'>
                                 {/* <HiOutlineStatusOnline size="15" color={`${elm.online ? "green" : "red"}`} /> this is for connected feature  */}
-                                <img src={`http://127.0.0.1:8000${elm.img}`} className="h-[50px]" />
+                                <img src={`http://${backend+elm.img}`} className="h-[50px]" />
                                 <h1 className='text-xl ml-5'>{elm.name}</h1>
                             </div>
                             <AiFillDelete size="30" className='ml-7 hover:bg-cyan-600' onClick={()=>deleteConversation(elm)} />
