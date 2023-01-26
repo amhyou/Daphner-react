@@ -51,7 +51,7 @@ const Share = ({post,accessToken,setEngagedPost,ws,setPosts,currUser}) => {
             {
                 shares.length && shares.map((elm,key) => {return(
                     <div key={key} className='flex items-center gap-2 justify-center'>
-                        <img className='h-[30px]' src={`http://${backend+elm.sender.image}`} />
+                        <img className='h-[30px]' src={`https://${backend+elm.sender.image}`} />
                         <h1 className='text-white text-center underline cursor-pointer'>{elm.sender.name}</h1>
                         <p>published it at {elm.time.slice(0,16)}</p>
                     </div>

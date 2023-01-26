@@ -50,7 +50,7 @@ const Profile = ({accessToken,otherUser,currUser}) => {
     <div className='flex flex-col items-center'>
         { pro &&
             <div className='flex flex-col'>
-                <img src={`http://${backend+pro.image}`} className="h-[300px]" />
+                <img src={`https://${backend+pro.image}`} className="h-[300px]" />
                 <div className='flex gap-5 items-center mb-5'>
                     <h1 className='text-2xl text-bold text-center'>{pro.name}</h1>
                     <h1 className='text-lg text-center'>Followers:{stats.followers}</h1>

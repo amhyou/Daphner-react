@@ -1,6 +1,6 @@
 export const backend = "daphner.amhyou.com"
 
-const url = "http://"+backend+"/api/"
+const url = "https://"+backend+"/api/"
 
 export async function makePost(end,data,token=""){
     const req = await fetch(url+end,{

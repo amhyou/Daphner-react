@@ -19,7 +19,7 @@ const Notification = ({accessToken,ws,showOtherProfile}) => {
             {
                 notifs.length!=0 && notifs.map((elm,i)=>{return(
                     <div key={i} className='mx-3 flex items-center border-2 border-solid border-white rounded-lg cursor-pointer hover:scale-[1.05]'>
-                        <img className='h-[35px] ml-5 mr-1' src={`http://${backend+elm.pro.image}`} onClick={()=>showOtherProfile(elm.pro.id)} />
+                        <img className='h-[35px] ml-5 mr-1' src={`https://${backend+elm.pro.image}`} onClick={()=>showOtherProfile(elm.pro.id)} />
                         <h1 className='text-md underline cursor-pointer' onClick={()=>showOtherProfile(elm.pro.id)}>{elm.pro.name}</h1>
                         <h1 className='ml-3'>{elm.msg.slice(2)}</h1>
                         <h1 className='ml-3'>at {elm.time.slice(0,16)}</h1>

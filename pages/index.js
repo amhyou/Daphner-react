@@ -60,7 +60,7 @@ export default function Home() {
   
   useEffect(()=>{
     if(relogin==2){
-      const sock = new WebSocket("ws://"+backend+"/realtime?token="+accessToken)
+      const sock = new WebSocket("wss://"+backend+"/realtime?token="+accessToken)
     
       setWs(prev=>sock)
     }

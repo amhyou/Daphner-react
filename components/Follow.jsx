@@ -29,7 +29,7 @@ const Follow = ({accessToken,ws,currUser,showOtherProfile}) => {
             {
                 trends.length && trends.map((elm,i)=>{return(
                     <div key={i} className='mx-3 flex items-center border-[.5] border-solid border-white rounded-lg'>
-                        <img className='h-[35px] ml-5 mr-1' src={`http://${backend+elm.image}`} onClick={()=>showOtherProfile(elm.id)} />
+                        <img className='h-[35px] ml-5 mr-1' src={`https://${backend+elm.image}`} onClick={()=>showOtherProfile(elm.id)} />
                         <h1 className='text-md underline cursor-pointer' onClick={()=>showOtherProfile(elm.id)}>{elm.name}</h1>
                         <button className={`text-black bg-green-600 ml-1 hover:scale-[1.05] rounded-lg p-1 hover:bg-green-200`} onClick={()=>handleFollow(elm)}>Follow</button>
                     </div>

@@ -21,7 +21,7 @@ const Navigation = ({accessToken,setRelogin,setSection,showOtherProfile,currUser
                 {
                     prof &&
                     <div className='mt-10 flex flex-col items-center justify-center cursor-pointer'>
-                        <img className='h-[100px] ml-5 mr-1 rounded-full' src={`http://${backend+prof.image}`} />
+                        <img className='h-[100px] ml-5 mr-1 rounded-full' src={`https://${backend+prof.image}`} />
                         <h1 className='text-lg'>{prof.name}</h1>
                     </div>
 
